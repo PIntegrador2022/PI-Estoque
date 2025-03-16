@@ -1,14 +1,13 @@
 <?php
+$host = 'localhost';
+$dbname = 'estoque';
+$usuario = 'root';
+$senha = '';
 
-    $host = "localhost"; // Sevidor do banco de dados
-    $usuario = "root";   // usuario padrão do mysql
-    $senha = "";         // Senha padrão do mysql
-    $banco = "estoque";  // Nome do banco de dados
-
-    try {
-        $conexao = new PDO("mysql:host=$host;dbname=$banco;charset=utf8", $usuario, $senha);
-    } catch (PDOException $e){
-        die("falha na conexão: ".$e->getMessage());
-    }
-
+try {
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $usuario, $senha);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    die("Erro de conexão: " . $e->getMessage());
+}
 ?>

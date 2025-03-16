@@ -2,7 +2,7 @@
     session_start();
 
     if (isset($_SESSION['usuario'])){
-        header("Location: dashboard.php");
+        header("Location: /dashboard.php");
         exit();
     }
 ?>
@@ -12,12 +12,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PI Estoque</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
     <div class="login-container">
         <h2>Login</h2>
-        <form action="includes/autenticar.php" method="POST"> 
+
+        <?php if (isset($_GET['erro']) && $_GET['erro'] == 1): ?>
+        <p class="error">Usuário ou senha inválidos!</p>
+        <?php endif; ?>
+
+        <form action="../includes/autenticar.php" method="POST"> 
             <label for="usuario">Usuário</label>
             <input type="text" name="usuario" require>
 
