@@ -8,6 +8,11 @@ if (!isset($_SESSION['usuario_id']) || $_SESSION['nivel_acesso'] != 'admin') {
     exit;
 }
 
+// Buscar o nome do usuário logado
+$stmt = $pdo->prepare("SELECT nome FROM usuarios WHERE id = ?");
+$stmt->execute([$_SESSION['usuario_id']]);
+$usuario_logado = $stmt->fetch(PDO::FETCH_ASSOC);
+
 // Processa o formulário de cadastro de produto
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nome = $_POST['nome'];
@@ -49,6 +54,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         <!-- Conteúdo Principal -->
         <main class="content">
+
+         <!-- Cabeçalho -->
+         <header class="header">
+                <div class="logo">
+                    <img src="https://estoquetudo.com.br/wp-content/themes/estoque-tudo/images/assets/logo.svg" alt="Logo" width="50">
+                </div>
+                <div class="user-info">
+                    <span class="user-name">Olá, <?= htmlspecialchars($usuario_logado['nome']) ?></span>
+                    <div class="dropdown-menu">
+                        <a href="editar-perfil.php">Editar Perfil</a>
+                        <a href="logout.php">Sair</a>
+                    </div>
+                </div>
+            </header>
+
             <h2>Cadastro de Produto</h2>
             <form method="POST">
                 <input type="text" name="nome" placeholder="Nome do Produto" required>
@@ -59,5 +79,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </form>
         </main>
     </div>
+
+       <!-- Script para o Menu Dropdown -->
+       <script>
+        // Mostrar/Esconder o menu dropdown ao clicar no nome do usuário
+        const userInfo = document.querySelector('.user-info');
+        const dropdownMenu = document.querySelector('.dropdown-menu');
+
+        userInfo.addEventListener('click', () => {
+            dropdownMenu.classList.toggle('show');
+        });
+
+        // Fechar o menu quando clicar fora dele
+        document.addEventListener('click', (event) => {
+            if (!userInfo.contains(event.target)) {
+                dropdownMenu.classList.remove('show');
+            }
+        });
+    </script>
+
 </body>
 </html>
