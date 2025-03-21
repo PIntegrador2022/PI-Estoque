@@ -52,14 +52,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 <body>
     <div class="container">
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <h2>Menu</h2>
-            <ul>
-                <li><a href="dashboard.php">Dashboard</a></li>
-                <li><a href="logout.php">Sair</a></li>
-            </ul>
-        </aside>
+          <!-- Sidebar -->
+          <?php include_once 'includes/sidebar.php'; ?>
 
         <!-- Conteúdo Principal -->
         <main class="content">

@@ -1,6 +1,6 @@
 <?php
+// Inicia a sessão
 session_start();
-include_once 'db/connect.php';
 
 // Verifica se o usuário está logado
 if (!isset($_SESSION['usuario_id'])) {
@@ -11,6 +11,7 @@ if (!isset($_SESSION['usuario_id'])) {
 // Garante que o nome do usuário está definido na sessão
 if (!isset($_SESSION['nome'])) {
     // Busca o nome do usuário no banco de dados, caso não esteja na sessão
+    include_once 'db/connect.php';
     $stmt = $pdo->prepare("SELECT nome FROM usuarios WHERE id = ?");
     $stmt->execute([$_SESSION['usuario_id']]);
     $usuario_logado = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -27,18 +28,10 @@ if (!isset($_SESSION['nome'])) {
 
 $nivel_acesso = $_SESSION['nivel_acesso'];
 
-// Buscar o total de usuários
-$stmt = $pdo->query("SELECT COUNT(*) AS total_usuarios FROM usuarios");
-$total_usuarios = $stmt->fetch(PDO::FETCH_ASSOC)['total_usuarios'];
-
-// Buscar o total de produtos
-$stmt = $pdo->query("SELECT COUNT(*) AS total_produtos FROM produtos");
-$total_produtos = $stmt->fetch(PDO::FETCH_ASSOC)['total_produtos'];
-
-// Buscar o valor total dos produtos
-$stmt = $pdo->query("SELECT SUM(preco * quantidade) AS valor_total_produtos FROM produtos");
-$valor_total_produtos = $stmt->fetch(PDO::FETCH_ASSOC)['valor_total_produtos'];
-$valor_total_produtos = number_format($valor_total_produtos, 2, ',', '.');
+// Buscar todos os produtos
+include_once 'db/connect.php';
+$stmt = $pdo->query("SELECT * FROM produtos");
+$produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -46,7 +39,7 @@ $valor_total_produtos = number_format($valor_total_produtos, 2, ',', '.');
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Listagem de Produtos</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -70,22 +63,33 @@ $valor_total_produtos = number_format($valor_total_produtos, 2, ',', '.');
                 </div>
             </header>
 
-            <!-- Cards do Dashboard -->
-            <h2>Painel de Controle</h2>
-            <div class="cards-container">
-                <div class="card">
-                    <h3>Total de Usuários</h3>
-                    <p><?= $total_usuarios ?></p>
-                </div>
-                <div class="card">
-                    <h3>Total de Produtos</h3>
-                    <p><?= $total_produtos ?></p>
-                </div>
-                <div class="card">
-                    <h3>Valor Total dos Produtos</h3>
-                    <p>R$ <?= $valor_total_produtos ?></p>
-                </div>
-            </div>
+            <!-- Conteúdo da Página -->
+            <h2>Listagem de Produtos</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Descrição</th>
+                        <th>Quantidade</th>
+                        <th>Preço</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($produtos as $produto): ?>
+                        <tr>
+                            <td><?= htmlspecialchars($produto['nome']) ?></td>
+                            <td><?= htmlspecialchars($produto['descricao']) ?></td>
+                            <td><?= $produto['quantidade'] ?></td>
+                            <td>R$ <?= number_format($produto['preco'], 2, ',', '.') ?></td>
+                            <td>
+                                <a href="editar-produto.php?id=<?= $produto['id'] ?>">Editar</a>
+                                <a href="excluir-produto.php?id=<?= $produto['id'] ?>" onclick="return confirm('Tem certeza que deseja excluir este produto?')">Excluir</a>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
         </main>
     </div>
 

@@ -40,17 +40,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 <body>
     <div class="container">
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <h2>Menu</h2>
-            <ul>
-                <li><a href="dashboard.php">Dashboard</a></li>
-                <li><a href="cadastro-produto.php">Cadastrar Produto</a></li>
-                <li><a href="cadastro-usuario.php">Cadastrar Usuário</a></li>
-                <li><a href="listagem-usuarios.php">Listar Usuários</a></li>
-                <li><a href="logout.php">Sair</a></li>
-            </ul>
-        </aside>
+          <!-- Sidebar -->
+          <?php include_once 'includes/sidebar.php'; ?>
 
         <!-- Conteúdo Principal -->
         <main class="content">
@@ -59,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <!-- Cabeçalho -->
         <header class="header">
                 <div class="logo">
-                    <img src="https://estoquetudo.com.br/wp-content/themes/estoque-tudo/images/assets/logo.svg" alt="Logo" width="50"> 
+                    <img src="https://bluefocus.com.br/sites/default/files/styles/medium/public/estoque.png?itok=1yVi8VcO" alt="Logo" width="50"> 
                 </div>
                 <div class="user-info">
                     <span class="user-name">Olá, <?= htmlspecialchars($usuario_logado['nome']) ?></span>
@@ -84,22 +75,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </main>
     </div>
 
-     <!-- Script para o Menu Dropdown -->
-     <script>
-        // Mostrar/Esconder o menu dropdown ao clicar no nome do usuário
-        const userInfo = document.querySelector('.user-info');
-        const dropdownMenu = document.querySelector('.dropdown-menu');
-
-        userInfo.addEventListener('click', () => {
-            dropdownMenu.classList.toggle('show');
-        });
-
-        // Fechar o menu quando clicar fora dele
-        document.addEventListener('click', (event) => {
-            if (!userInfo.contains(event.target)) {
-                dropdownMenu.classList.remove('show');
-            }
-        });
-    </script>
+    <script src="js/scripts.js"></script>
 </body>
 </html>
