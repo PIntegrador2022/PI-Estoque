@@ -19,6 +19,8 @@ $nivel_acesso = $_SESSION['nivel_acesso'];
             <ul class="submenu-items">
                 <li><a href="cadastro-produto.php">Cadastrar Produto</a></li>
                 <li><a href="listagem-produtos.php">Listar Produtos</a></li>
+                <li><a href="entrada-produto.php">Entrada de Produtos</a></li>
+                <li><a href="saida-produto.php">Saída de Produtos</a></li> <!-- Nova opção -->
             </ul>
         </li>
 

@@ -269,6 +269,10 @@ table td a:hover {
     font-weight: bold;
 }
 
+.select-user{
+    margin-bottom: 8px;
+}
+
 /* Responsividade */
 @media (max-width: 768px) {
     .sidebar {

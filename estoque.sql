@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 19/03/2025 às 23:32
+-- Tempo de geração: 27/03/2025 às 02:04
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -40,8 +40,21 @@ CREATE TABLE `produtos` (
 --
 
 INSERT INTO `produtos` (`id`, `nome`, `descricao`, `quantidade`, `preco`) VALUES
-(1, 'camisa polo', 'camisa básica', 10, 15.00),
-(2, 'Camisa longa', 'Camisa masculina', 20, 50.00);
+(2, 'Camisa longa', 'Camisa masculina', 20, 50.00),
+(3, 'Calça Jeans ( Masculina )', 'Calça usual', 20, 230.00),
+(4, 'Jaqueta motoqueiro', 'Jaqueta de alta qualidade', 18, 250.53),
+(5, 'Bermuda ', 'Bermuda de verão', 15, 99.99),
+(6, 'Blusa Inverno', 'Blusa Moda inverno', 23, 45.25),
+(7, 'Camisa gola polo', 'camisa casual', 45, 37.55),
+(8, 'Calça Moleton', 'Calça Inverno', 45, 89.99),
+(9, 'Camisa Dry Fit', 'Camisa para academia', 100, 65.99),
+(10, 'Bermuda Dry Fit ', 'Bermuda para academia', 45, 39.90),
+(11, 'Camisa Musculação', 'Camisa para treino em academia', 25, 45.00),
+(12, 'Toalha', 'Toalha para banho', 25, 32.00),
+(13, 'Lençol', 'Lençol Florido', 45, 36.88),
+(14, 'Almofadas ', 'Kit 3 almofadas', 45, 35.55),
+(15, 'Guardanapo', 'Guardanapo para cosinha', 100, 25.00),
+(16, 'camisa manga curta', 'camisa básica', 45, 39.90);
 
 -- --------------------------------------------------------
 
@@ -63,7 +76,8 @@ CREATE TABLE `usuarios` (
 
 INSERT INTO `usuarios` (`id`, `nome`, `senha`, `nivel_acesso`, `login`) VALUES
 (2, 'Admin', '0192023a7bbd73250516f069df18b500', 'admin', 'admin'),
-(3, 'Marcelo', 'e10adc3949ba59abbe56e057f20f883e', 'usuario', 'marcelo');
+(3, 'Marcelo', 'e10adc3949ba59abbe56e057f20f883e', 'usuario', 'marcelo'),
+(4, 'Teste da Silva', 'aa1bf4646de67fd9086cf6c79007026c', 'admin', 'Teste');
 
 --
 -- Índices para tabelas despejadas
@@ -90,13 +104,13 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de tabela `produtos`
 --
 ALTER TABLE `produtos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de tabela `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

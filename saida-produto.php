@@ -25,6 +25,34 @@ if ($busca) {
     $stmt = $pdo->query("SELECT * FROM produtos");
 }
 $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Processa o formulário de saída de produtos
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $produto_id = $_POST['produto_id'];
+    $quantidade_retirada = (int)$_POST['quantidade_retirada'];
+
+    // Verifica se a quantidade é válida
+    if ($quantidade_retirada <= 0) {
+        echo "<p style='color:red;'>A quantidade deve ser maior que zero.</p>";
+    } else {
+        // Busca a quantidade atual do produto no banco de dados
+        $stmt = $pdo->prepare("SELECT quantidade FROM produtos WHERE id = ?");
+        $stmt->execute([$produto_id]);
+        $produto = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($produto && $produto['quantidade'] >= $quantidade_retirada) {
+            // Atualiza a quantidade do produto no banco de dados
+            $nova_quantidade = $produto['quantidade'] - $quantidade_retirada;
+            $stmt = $pdo->prepare("UPDATE produtos SET quantidade = ? WHERE id = ?");
+            $stmt->execute([$nova_quantidade, $produto_id]);
+
+            // Exibe uma mensagem de sucesso
+            echo "<p style='color:green;'>Saída registrada com sucesso!</p>";
+        } else {
+            echo "<p style='color:red;'>Quantidade insuficiente em estoque.</p>";
+        }
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -32,7 +60,7 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Listagem de Produtos</title>
+    <title>Saída de Produtos</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -59,7 +87,7 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <!-- Área de Scroll -->
             <div class="scrollable-content">
                 <!-- Título da Página -->
-                <h2>Listagem de Produtos</h2>
+                <h2>Saída de Produtos</h2>
 
                 <!-- Formulário de Busca -->
                 <form method="GET" style="margin-bottom: 20px;">
@@ -74,8 +102,7 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <th>Código</th>
                             <th>Nome</th>
                             <th>Descrição</th>
-                            <th>Quantidade</th>
-                            <th>Preço</th>
+                            <th>Quantidade Atual</th>
                             <th>Ações</th>
                         </tr>
                     </thead>
@@ -86,10 +113,13 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 <td><?= htmlspecialchars($produto['nome']) ?></td>
                                 <td><?= htmlspecialchars($produto['descricao']) ?></td>
                                 <td><?= $produto['quantidade'] ?></td>
-                                <td>R$ <?= number_format($produto['preco'], 2, ',', '.') ?></td>
                                 <td>
-                                    <a href="editar-produto.php?id=<?= $produto['id'] ?>">Editar</a>
-                                    <a href="excluir-produto.php?id=<?= $produto['id'] ?>" onclick="return confirm('Tem certeza que deseja excluir este produto?')">Excluir</a>
+                                    <!-- Formulário para Registrar Saída -->
+                                    <form method="POST" style="display:inline;">
+                                        <input type="hidden" name="produto_id" value="<?= $produto['id'] ?>">
+                                        <input type="number" name="quantidade_retirada" placeholder="Quantidade" min="1" required>
+                                        <button type="submit">Registrar Saída</button>
+                                    </form>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

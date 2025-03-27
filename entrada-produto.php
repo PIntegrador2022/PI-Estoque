@@ -32,7 +32,7 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Listagem de Produtos</title>
+    <title>Entrada de Produtos</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -59,7 +59,7 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <!-- Área de Scroll -->
             <div class="scrollable-content">
                 <!-- Título da Página -->
-                <h2>Listagem de Produtos</h2>
+                <h2>Entrada de Produtos</h2>
 
                 <!-- Formulário de Busca -->
                 <form method="GET" style="margin-bottom: 20px;">
@@ -74,8 +74,7 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <th>Código</th>
                             <th>Nome</th>
                             <th>Descrição</th>
-                            <th>Quantidade</th>
-                            <th>Preço</th>
+                            <th>Quantidade Atual</th>
                             <th>Ações</th>
                         </tr>
                     </thead>
@@ -86,10 +85,13 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 <td><?= htmlspecialchars($produto['nome']) ?></td>
                                 <td><?= htmlspecialchars($produto['descricao']) ?></td>
                                 <td><?= $produto['quantidade'] ?></td>
-                                <td>R$ <?= number_format($produto['preco'], 2, ',', '.') ?></td>
                                 <td>
-                                    <a href="editar-produto.php?id=<?= $produto['id'] ?>">Editar</a>
-                                    <a href="excluir-produto.php?id=<?= $produto['id'] ?>" onclick="return confirm('Tem certeza que deseja excluir este produto?')">Excluir</a>
+                                    <!-- Formulário para Registrar Entrada -->
+                                    <form method="POST" style="display:inline;">
+                                        <input type="hidden" name="produto_id" value="<?= $produto['id'] ?>">
+                                        <input type="number" name="quantidade_adicional" placeholder="Quantidade" min="1" required>
+                                        <button type="submit">Registrar Entrada</button>
+                                    </form>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

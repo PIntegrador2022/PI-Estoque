@@ -66,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <input type="text" name="nome" placeholder="Nome do Usuário" required>
                 <input type="text" name="login" placeholder="Login do Usuário" required>
                 <input type="password" name="senha" placeholder="Senha do Usuário" required>
-                <select name="nivel_acesso" required>
+                <select class="select-user" name="nivel_acesso" required>
                     <option value="admin">Admin</option>
                     <option value="usuario">Usuário</option>
                 </select>
