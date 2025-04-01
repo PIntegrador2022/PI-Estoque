@@ -32,23 +32,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Produto</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
     <div class="container">
         <!-- Sidebar -->
-          <!-- Sidebar -->
-          <?php include_once 'includes/sidebar.php'; ?>
+        <!-- Sidebar -->
+        <?php include_once 'includes/sidebar.php'; ?>
 
         <!-- Conteúdo Principal -->
         <main class="content">
 
-         <!-- Cabeçalho -->
-         <header class="header">
+            <!-- Cabeçalho -->
+            <header class="header">
                 <div class="logo">
                     <img src="https://bluefocus.com.br/sites/default/files/styles/medium/public/estoque.png?itok=1yVi8VcO" alt="Logo" width="50">
                 </div>
@@ -61,6 +63,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
             </header>
 
+            <!-- Seleção de Categoria -->
+            <label for="categoria_id">Categoria:</label>
+            <select name="categoria_id" id="categoria_id" required>
+                <option value="">Selecione uma categoria</option>
+                <?php
+                $stmt = $pdo->query("SELECT * FROM categorias");
+                $categorias = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                foreach ($categorias as $categoria): ?>
+                    <option value="<?= $categoria['id'] ?>"><?= htmlspecialchars($categoria['nome']) ?></option>
+                <?php endforeach; ?>
+            </select>
+
             <h2>Cadastro de Produto</h2>
             <form method="POST">
                 <input type="text" name="nome" placeholder="Nome do Produto" required>
@@ -72,10 +86,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </main>
     </div>
 
-      
 
-<script src="js/scripts.js"></script>
+
+    <script src="js/scripts.js"></script>
 
 
 </body>
+
 </html>

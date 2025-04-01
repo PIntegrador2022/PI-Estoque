@@ -17,10 +17,26 @@ $nivel_acesso = $_SESSION['nivel_acesso'];
         <li class="submenu">
             <span class="submenu-title">Gerenciamento de Produtos</span>
             <ul class="submenu-items">
-                <li><a href="cadastro-produto.php">Cadastrar Produto</a></li>
-                <li><a href="listagem-produtos.php">Listar Produtos</a></li>
-                <li><a href="entrada-produto.php">Entrada de Produtos</a></li>
-                <li><a href="saida-produto.php">Saída de Produtos</a></li> <!-- Nova opção -->
+                <!-- Submenu Produto -->
+                <li class="submenu">
+                    <span class="submenu-title">Produto</span>
+                    <ul class="submenu-items">
+                        <li><a href="cadastro-produto.php">Cadastrar Produto</a></li>
+                        <li><a href="listagem-produtos.php">Listar Produtos</a></li>
+                        <li><a href="entrada-produto.php">Entrada de Produtos</a></li>
+                        <li><a href="saida-produto.php">Saída de Produtos</a></li>
+                        <li><a href="contagem.php">Contagem de Produtos</a></li>
+                    </ul>
+                </li>
+
+                <!-- Submenu Categoria -->
+                <li class="submenu">
+                    <span class="submenu-title">Categoria</span>
+                    <ul class="submenu-items">
+                        <li><a href="listagem-categorias.php">Listagem de Categorias</a></li>
+                        <li><a href="cadastro-categoria.php">Cadastro de Categorias</a></li>
+                    </ul>
+                </li>
             </ul>
         </li>
 

@@ -45,16 +45,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Produto</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
     <div class="container">
-          <!-- Sidebar -->
-          <?php include_once 'includes/sidebar.php'; ?>
+        <!-- Sidebar -->
+        <?php include_once 'includes/sidebar.php'; ?>
 
         <!-- Conteúdo Principal -->
         <main class="content">
@@ -66,7 +68,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <input type="number" step="0.01" name="preco" placeholder="Preço" value="<?= $produto['preco'] ?>" required>
                 <button type="submit">Salvar Alterações</button>
             </form>
+
+            <!-- Seleção de Categoria -->
+            <label for="categoria_id">Categoria:</label>
+            <select name="categoria_id" id="categoria_id" required>
+                <option value="">Selecione uma categoria</option>
+                <?php
+                $stmt = $pdo->query("SELECT * FROM categorias");
+                $categorias = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                foreach ($categorias as $categoria): ?>
+                    <option value="<?= $categoria['id'] ?>"><?= htmlspecialchars($categoria['nome']) ?></option>
+                <?php endforeach; ?>
+            </select>
         </main>
     </div>
+    <script src="js/scripts.js"></script>
 </body>
+
 </html>

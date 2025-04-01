@@ -29,12 +29,14 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Listagem de Produtos</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
     <div class="container">
         <!-- Sidebar -->
@@ -45,7 +47,7 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <!-- Cabeçalho -->
             <header class="header">
                 <div class="logo">
-                <img src="https://bluefocus.com.br/sites/default/files/styles/medium/public/estoque.png?itok=1yVi8VcO" alt="Logo" width="50">
+                    <img src="https://bluefocus.com.br/sites/default/files/styles/medium/public/estoque.png?itok=1yVi8VcO" alt="Logo" width="50">
                 </div>
                 <div class="user-info">
                     <span class="user-name"><?= htmlspecialchars($_SESSION['nome']) ?></span>
@@ -96,8 +98,26 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     </tbody>
                 </table>
             </div>
+
+            <!-- Filtro de Categoria -->
+            <form method="GET" style="margin-bottom: 20px;">
+                <label for="categoria_id">Filtrar por Categoria:</label>
+                <select name="categoria_id" id="categoria_id">
+                    <option value="">Todas as Categorias</option>
+                    <?php
+                    $stmt = $pdo->query("SELECT * FROM categorias");
+                    $categorias = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                    foreach ($categorias as $categoria): ?>
+                        <option value="<?= $categoria['id'] ?>" <?= isset($_GET['categoria_id']) && $_GET['categoria_id'] == $categoria['id'] ? 'selected' : '' ?>>
+                            <?= htmlspecialchars($categoria['nome']) ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+                <button type="submit">Filtrar</button>
+            </form>
         </main>
     </div>
     <script src="js/scripts.js"></script>
 </body>
+
 </html>
