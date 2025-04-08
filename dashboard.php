@@ -39,6 +39,10 @@ $total_produtos = $stmt->fetch(PDO::FETCH_ASSOC)['total_produtos'];
 $stmt = $pdo->query("SELECT SUM(preco * quantidade) AS valor_total_produtos FROM produtos");
 $valor_total_produtos = $stmt->fetch(PDO::FETCH_ASSOC)['valor_total_produtos'];
 $valor_total_produtos = number_format($valor_total_produtos, 2, ',', '.');
+
+// Consulta para produtos com estoque baixo
+$stmt = $pdo->query("SELECT * FROM produtos WHERE quantidade <= estoque_minimo");
+$produtos_baixo_estoque = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -84,6 +88,23 @@ $valor_total_produtos = number_format($valor_total_produtos, 2, ',', '.');
                 <div class="card">
                     <h3>Valor Total dos Produtos</h3>
                     <p>R$ <?= $valor_total_produtos ?></p>
+                </div>
+
+                <!-- Card de Alerta de Estoque Baixo -->
+                <div class="card">
+                    <h3>Alerta de Estoque Baixo</h3>
+                    <?php if (count($produtos_baixo_estoque) > 0): ?>
+                        <ul>
+                            <?php foreach ($produtos_baixo_estoque as $produto): ?>
+                                <li>
+                                    <?= htmlspecialchars($produto['nome']) ?> 
+                                    (Quantidade: <?= $produto['quantidade'] ?>/<?= $produto['estoque_minimo'] ?>)
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    <?php else: ?>
+                        <p>Nenhum produto com estoque baixo.</p>
+                    <?php endif; ?>
                 </div>
             </div>
         </main>

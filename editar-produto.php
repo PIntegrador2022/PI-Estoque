@@ -66,6 +66,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <textarea name="descricao" placeholder="Descrição do Produto"><?= htmlspecialchars($produto['descricao']) ?></textarea>
                 <input type="number" name="quantidade" placeholder="Quantidade" value="<?= $produto['quantidade'] ?>" required>
                 <input type="number" step="0.01" name="preco" placeholder="Preço" value="<?= $produto['preco'] ?>" required>
+                <label for="estoque_minimo">Estoque Mínimo:</label>
+<input type="number" name="estoque_minimo" id="estoque_minimo" value="<?= isset($produto['estoque_minimo']) ? $produto['estoque_minimo'] : 10 ?>" min="1" required>
                 <button type="submit">Salvar Alterações</button>
             </form>
 

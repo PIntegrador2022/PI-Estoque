@@ -26,6 +26,7 @@ $nivel_acesso = $_SESSION['nivel_acesso'];
                         <li><a href="entrada-produto.php">Entrada de Produtos</a></li>
                         <li><a href="saida-produto.php">Saída de Produtos</a></li>
                         <li><a href="contagem.php">Contagem de Produtos</a></li>
+                        <li><a href="relatorios.php">Relatórios</a></li>
                     </ul>
                 </li>
 

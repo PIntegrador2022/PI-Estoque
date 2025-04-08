@@ -301,6 +301,12 @@ table td a:hover {
     background-color: #c0392b;
 }
 
+.baixo-estoque {
+    background-color: #f8d7da; /* Fundo rosa claro */
+    color: #721c24; /* Texto vermelho escuro */
+    font-weight: bold;
+}
+
 /* Contêiner de Mensagens */
 .message-container {
     margin: 20px;

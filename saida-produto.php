@@ -26,14 +26,18 @@ if ($busca) {
 }
 $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+// Variável para armazenar a mensagem
+$mensagem = '';
+
 // Processa o formulário de saída de produtos
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $produto_id = $_POST['produto_id'];
     $quantidade_retirada = (int)$_POST['quantidade_retirada'];
+    $data_movimentacao = $_POST['data_movimentacao'];
 
     // Verifica se a quantidade é válida
     if ($quantidade_retirada <= 0) {
-        echo "<p style='color:red;'>A quantidade deve ser maior que zero.</p>";
+        $mensagem = "<p style='color:red;'>A quantidade deve ser maior que zero.</p>";
     } else {
         // Busca a quantidade atual do produto no banco de dados
         $stmt = $pdo->prepare("SELECT quantidade FROM produtos WHERE id = ?");
@@ -46,10 +50,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $stmt = $pdo->prepare("UPDATE produtos SET quantidade = ? WHERE id = ?");
             $stmt->execute([$nova_quantidade, $produto_id]);
 
-            // Exibe uma mensagem de sucesso
-            echo "<p style='color:green;'>Saída registrada com sucesso!</p>";
+            // Registra a movimentação na tabela `movimentacoes`
+            $stmt = $pdo->prepare("INSERT INTO movimentacoes (produto_id, tipo, quantidade, data_movimentacao) VALUES (?, 'saida', ?, ?)");
+            $stmt->execute([$produto_id, $quantidade_retirada, $data_movimentacao]);
+
+            // Define a mensagem de sucesso
+            $mensagem = "<p style='color:green;'>Saída registrada com sucesso!</p>";
         } else {
-            echo "<p style='color:red;'>Quantidade insuficiente em estoque.</p>";
+            $mensagem = "<p style='color:red;'>Quantidade insuficiente em estoque.</p>";
         }
     }
 }
@@ -83,6 +91,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </div>
                 </div>
             </header>
+
+            <!-- Área de Mensagens -->
+            <?php if (!empty($mensagem)): ?>
+                <div class="message-container <?= strpos($mensagem, 'sucesso') !== false ? 'success' : 'error' ?>">
+                    <?= $mensagem ?>
+                </div>
+            <?php endif; ?>
 
             <!-- Área de Scroll -->
             <div class="scrollable-content">
@@ -118,6 +133,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     <form method="POST" style="display:inline;">
                                         <input type="hidden" name="produto_id" value="<?= $produto['id'] ?>">
                                         <input type="number" name="quantidade_retirada" placeholder="Quantidade" min="1" required>
+                                        <input type="date" name="data_movimentacao" value="<?= date('Y-m-d') ?>" required>
                                         <button type="submit">Registrar Saída</button>
                                     </form>
                                 </td>

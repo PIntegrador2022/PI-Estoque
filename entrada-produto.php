@@ -25,6 +25,32 @@ if ($busca) {
     $stmt = $pdo->query("SELECT * FROM produtos");
 }
 $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Variável para armazenar a mensagem
+$mensagem = '';
+
+// Processa o formulário de entrada de produtos
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $produto_id = $_POST['produto_id'];
+    $quantidade_adicional = (int)$_POST['quantidade_adicional'];
+    $data_movimentacao = $_POST['data_movimentacao'];
+
+    // Verifica se a quantidade é válida
+    if ($quantidade_adicional <= 0) {
+        $mensagem = "<p style='color:red;'>A quantidade deve ser maior que zero.</p>";
+    } else {
+        // Atualiza a quantidade do produto no banco de dados
+        $stmt = $pdo->prepare("UPDATE produtos SET quantidade = quantidade + ? WHERE id = ?");
+        $stmt->execute([$quantidade_adicional, $produto_id]);
+
+        // Registra a movimentação na tabela `movimentacoes`
+        $stmt = $pdo->prepare("INSERT INTO movimentacoes (produto_id, tipo, quantidade, data_movimentacao) VALUES (?, 'entrada', ?, ?)");
+        $stmt->execute([$produto_id, $quantidade_adicional, $data_movimentacao]);
+
+        // Define a mensagem de sucesso
+        $mensagem = "<p style='color:green;'>Entrada registrada com sucesso!</p>";
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -55,6 +81,13 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     </div>
                 </div>
             </header>
+
+            <!-- Área de Mensagens -->
+            <?php if (!empty($mensagem)): ?>
+                <div class="message-container <?= strpos($mensagem, 'sucesso') !== false ? 'success' : 'error' ?>">
+                    <?= $mensagem ?>
+                </div>
+            <?php endif; ?>
 
             <!-- Área de Scroll -->
             <div class="scrollable-content">
@@ -90,6 +123,7 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                     <form method="POST" style="display:inline;">
                                         <input type="hidden" name="produto_id" value="<?= $produto['id'] ?>">
                                         <input type="number" name="quantidade_adicional" placeholder="Quantidade" min="1" required>
+                                        <input type="date" name="data_movimentacao" value="<?= date('Y-m-d') ?>" required>
                                         <button type="submit">Registrar Entrada</button>
                                     </form>
                                 </td>
