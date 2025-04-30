@@ -10,6 +10,15 @@ if (!isset($_SESSION['usuario_id'])) {
 
 $nivel_acesso = $_SESSION['nivel_acesso'];
 
+// Funções de formatação
+function formatarValorMonetario($valor) {
+    return 'R$ ' . number_format($valor, 2, ',', '.');
+}
+
+function formatarNumeroInteiro($numero) {
+    return number_format($numero, 0, ',', '.');
+}
+
 // Variáveis para armazenar os resultados
 $data_inicio = isset($_GET['data_inicio']) ? $_GET['data_inicio'] : null;
 $data_fim = isset($_GET['data_fim']) ? $_GET['data_fim'] : null;
@@ -162,10 +171,13 @@ if ($data_inicio && $data_fim && $tipo_relatorio) {
                                     <tr>
                                         <?php if ($tipo_relatorio === 'tendencias'): ?>
                                             <td><?= $resultado['mes'] ?></td>
-                                            <td><?= $resultado['total_movimentado'] ?></td>
+                                            <td><?= formatarNumeroInteiro($resultado['total_movimentado']) ?></td>
+                                        <?php elseif ($tipo_relatorio === 'valor'): ?>
+                                            <td><?= htmlspecialchars($resultado['produto']) ?></td>
+                                            <td><?= formatarValorMonetario($resultado['valor_total']) ?></td>
                                         <?php else: ?>
                                             <td><?= htmlspecialchars($resultado['produto']) ?></td>
-                                            <td><?= htmlspecialchars($resultado['total_consumido'] ?? $resultado['total_reposto'] ?? $resultado['valor_total']) ?></td>
+                                            <td><?= formatarNumeroInteiro($resultado['total_consumido'] ?? $resultado['total_reposto']) ?></td>
                                         <?php endif; ?>
                                     </tr>
                                 <?php endforeach; ?>

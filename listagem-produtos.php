@@ -10,19 +10,44 @@ if (!isset($_SESSION['usuario_id'])) {
 
 $nivel_acesso = $_SESSION['nivel_acesso'];
 
-// Inicializa a variável de busca
-$busca = isset($_GET['busca']) ? trim($_GET['busca']) : '';
+// Funções de formatação
+function formatarValorMonetario($valor) {
+    return 'R$ ' . number_format($valor, 2, ',', '.');
+}
 
-// Consulta os produtos com base na busca
+function formatarNumeroInteiro($numero) {
+    return number_format($numero, 0, ',', '.');
+}
+
+// Inicializa as variáveis de busca e filtro
+$busca = isset($_GET['busca']) ? trim($_GET['busca']) : '';
+$filtro_estoque = isset($_GET['filtro_estoque']) ? $_GET['filtro_estoque'] : 'todos'; // Padrão: "todos"
+
+// Consulta os produtos com base na busca e no filtro
 if ($busca) {
-    // Filtra por nome ou ID (código)
-    $stmt = $pdo->prepare("SELECT * FROM produtos WHERE id = :id OR nome LIKE :nome");
+    // Filtra por nome, ID ou categoria
+    $stmt = $pdo->prepare("
+        SELECT p.*, c.nome AS categoria_nome 
+        FROM produtos p
+        LEFT JOIN categorias c ON p.categoria_id = c.id
+        WHERE (p.id = :id OR p.nome LIKE :nome OR c.nome LIKE :categoria)
+        AND (:filtro_estoque = 'todos' OR p.quantidade <= p.estoque_minimo)
+    ");
     $stmt->bindValue(':id', $busca, PDO::PARAM_INT);
     $stmt->bindValue(':nome', '%' . $busca . '%', PDO::PARAM_STR);
+    $stmt->bindValue(':categoria', '%' . $busca . '%', PDO::PARAM_STR);
+    $stmt->bindValue(':filtro_estoque', $filtro_estoque, PDO::PARAM_STR);
     $stmt->execute();
 } else {
-    // Se não houver busca, lista todos os produtos
-    $stmt = $pdo->query("SELECT * FROM produtos");
+    // Se não houver busca, lista os produtos com base no filtro
+    $stmt = $pdo->prepare("
+        SELECT p.*, c.nome AS categoria_nome 
+        FROM produtos p
+        LEFT JOIN categorias c ON p.categoria_id = c.id
+        WHERE :filtro_estoque = 'todos' OR p.quantidade <= p.estoque_minimo
+    ");
+    $stmt->bindValue(':filtro_estoque', $filtro_estoque, PDO::PARAM_STR);
+    $stmt->execute();
 }
 $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
@@ -61,10 +86,17 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <!-- Título da Página -->
                 <h2>Listagem de Produtos</h2>
 
-                <!-- Formulário de Busca -->
+                <!-- Formulário de Busca e Filtro -->
                 <form method="GET" style="margin-bottom: 20px;">
-                    <input type="text" name="busca" placeholder="Buscar por nome ou código" value="<?= htmlspecialchars($busca) ?>" required>
-                    <button type="submit">Buscar</button>
+                    <input type="text" name="busca" placeholder="Buscar por nome, código ou categoria" value="<?= htmlspecialchars($busca) ?>" required>
+                    
+                    <label for="filtro_estoque">Filtrar por Estoque:</label>
+                    <select name="filtro_estoque" id="filtro_estoque">
+                        <option value="todos" <?= $filtro_estoque === 'todos' ? 'selected' : '' ?>>Todos os Produtos</option>
+                        <option value="baixo" <?= $filtro_estoque === 'baixo' ? 'selected' : '' ?>>Estoque Baixo</option>
+                    </select>
+
+                    <button type="submit">Aplicar Filtro</button>
                 </form>
 
                 <!-- Lista de Produtos -->
@@ -74,6 +106,7 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <th>Código</th>
                             <th>Nome</th>
                             <th>Descrição</th>
+                            <th>Categoria</th>
                             <th>Quantidade Atual</th>
                             <th>Estoque Mínimo</th>
                             <th>Preço</th>
@@ -86,9 +119,10 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 <td><?= $produto['id'] ?></td>
                                 <td><?= htmlspecialchars($produto['nome']) ?></td>
                                 <td><?= htmlspecialchars($produto['descricao']) ?></td>
-                                <td><?= $produto['quantidade'] ?></td>
-                                <td><?= $produto['estoque_minimo'] ?></td>
-                                <td>R$ <?= number_format($produto['preco'], 2, ',', '.') ?></td>
+                                <td><?= htmlspecialchars($produto['categoria_nome'] ?? 'Sem Categoria') ?></td>
+                                <td><?= formatarNumeroInteiro($produto['quantidade']) ?></td>
+                                <td><?= formatarNumeroInteiro($produto['estoque_minimo']) ?></td>
+                                <td><?= formatarValorMonetario($produto['preco']) ?></td>
                                 <td>
                                     <a href="editar-produto.php?id=<?= $produto['id'] ?>">Editar</a>
                                     <a href="excluir-produto.php?id=<?= $produto['id'] ?>" onclick="return confirm('Tem certeza que deseja excluir este produto?')">Excluir</a>

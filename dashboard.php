@@ -66,7 +66,7 @@ $produtos_baixo_estoque = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <img src="https://bluefocus.com.br/sites/default/files/styles/medium/public/estoque.png?itok=1yVi8VcO" alt="Logo" width="50">
                 </div>
                 <div class="user-info">
-                    <span class="user-name"><?= htmlspecialchars($_SESSION['nome']) ?></span>
+                    <span class="user-name">Olá, <?= htmlspecialchars($_SESSION['nome']) ?></span>
                     <div class="dropdown-menu">
                         <a href="editar-perfil.php">Editar Perfil</a>
                         <a href="logout.php">Sair</a>
