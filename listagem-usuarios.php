@@ -28,16 +28,15 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </head>
 <body>
     <div class="container">
-          <!-- Sidebar -->
-          <?php include_once 'includes/sidebar.php'; ?>
+        <!-- Sidebar -->
+        <?php include_once 'includes/sidebar.php'; ?>
 
         <!-- Conteúdo Principal -->
         <main class="content">
-
-         <!-- Cabeçalho -->
-         <header class="header">
+            <!-- Cabeçalho -->
+            <header class="header">
                 <div class="logo">
-                    <img src="https://bluefocus.com.br/sites/default/files/styles/medium/public/estoque.png?itok=1yVi8VcO" alt="Logo" width="50"> 
+                    <img src="https://bluefocus.com.br/sites/default/files/styles/medium/public/estoque.png?itok=1yVi8VcO" alt="Logo" width="50">
                 </div>
                 <div class="user-info">
                     <span class="user-name">Olá, <?= htmlspecialchars($usuario_logado['nome']) ?></span>
@@ -46,35 +45,55 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <a href="logout.php">Sair</a>
                     </div>
                 </div>
+                <button class="menu-toggle" id="menuToggle">&#9776;</button>
             </header>
 
-            <h2>Listagem de Usuários</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th>Login</th>
-                        <th>Nível de Acesso</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($usuarios as $usuario): ?>
+            <!-- Área de Scroll -->
+            <div class="scrollable-content">
+                <!-- Título da Página -->
+                <h2>Listagem de Usuários</h2>
+
+                <!-- Lista de Usuários (Visível no Desktop) -->
+                <table class="desktop-table">
+                    <thead>
                         <tr>
-                            <td><?= htmlspecialchars($usuario['nome']) ?></td>
-                            <td><?= htmlspecialchars($usuario['login']) ?></td>
-                            <td><?= htmlspecialchars($usuario['nivel_acesso']) ?></td>
-                            <td>
-                                <a href="editar-usuario.php?id=<?= $usuario['id'] ?>">Editar</a>
-                                <a href="excluir-usuario.php?id=<?= $usuario['id'] ?>" onclick="return confirm('Tem certeza que deseja excluir este usuário?')">Excluir</a>
-                            </td>
+                            <th>Nome</th>
+                            <th>Login</th>
+                            <th>Nível de Acesso</th>
+                            <th>Ações</th>
                         </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($usuarios as $usuario): ?>
+                            <tr>
+                                <td><?= htmlspecialchars($usuario['nome']) ?></td>
+                                <td><?= htmlspecialchars($usuario['login']) ?></td>
+                                <td><?= htmlspecialchars($usuario['nivel_acesso']) ?></td>
+                                <td>
+                                    <a href="editar-usuario.php?id=<?= $usuario['id'] ?>">Editar</a>
+                                    <a href="excluir-usuario.php?id=<?= $usuario['id'] ?>" onclick="return confirm('Tem certeza que deseja excluir este usuário?')">Excluir</a>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+
+                <!-- Lista Amigável para Mobile -->
+                <ul class="mobile-list">
+                    <?php foreach ($usuarios as $usuario): ?>
+                        <li>
+                            <strong>Nome:</strong> <?= htmlspecialchars($usuario['nome']) ?><br>
+                            <strong>Login:</strong> <?= htmlspecialchars($usuario['login']) ?><br>
+                            <strong>Nível de Acesso:</strong> <?= htmlspecialchars($usuario['nivel_acesso']) ?><br>
+                            <strong>Ações:</strong>
+                            <a href="editar-usuario.php?id=<?= $usuario['id'] ?>">Editar</a>
+                            <a href="excluir-usuario.php?id=<?= $usuario['id'] ?>" onclick="return confirm('Tem certeza que deseja excluir este usuário?')">Excluir</a>
+                        </li>
                     <?php endforeach; ?>
-                </tbody>
-            </table>
+                </ul>
+            </div>
         </main>
     </div>
-
     <script src="js/scripts.js"></script>
 </body>
 </html>

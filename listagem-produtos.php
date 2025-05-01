@@ -70,7 +70,7 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <!-- Cabeçalho -->
             <header class="header">
                 <div class="logo">
-                <img src="https://bluefocus.com.br/sites/default/files/styles/medium/public/estoque.png?itok=1yVi8VcO" alt="Logo" width="50">
+                    <img src="https://bluefocus.com.br/sites/default/files/styles/medium/public/estoque.png?itok=1yVi8VcO" alt="Logo" width="50">
                 </div>
                 <div class="user-info">
                     <span class="user-name"><?= htmlspecialchars($_SESSION['nome']) ?></span>
@@ -79,6 +79,7 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <a href="logout.php">Sair</a>
                     </div>
                 </div>
+                <button class="menu-toggle" id="menuToggle">&#9776;</button>
             </header>
 
             <!-- Área de Scroll -->
@@ -99,8 +100,8 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <button type="submit">Aplicar Filtro</button>
                 </form>
 
-                <!-- Lista de Produtos -->
-                <table>
+                <!-- Lista de Produtos (Visível no Desktop) -->
+                <table class="desktop-table">
                     <thead>
                         <tr>
                             <th>Código</th>
@@ -131,6 +132,24 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <?php endforeach; ?>
                     </tbody>
                 </table>
+
+                <!-- Lista Amigável para Mobile -->
+                <ul class="mobile-list">
+                    <?php foreach ($produtos as $produto): ?>
+                        <li class="<?= $produto['quantidade'] <= $produto['estoque_minimo'] ? 'baixo-estoque' : '' ?>">
+                            <strong>Código:</strong> <?= $produto['id'] ?><br>
+                            <strong>Nome:</strong> <?= htmlspecialchars($produto['nome']) ?><br>
+                            <strong>Descrição:</strong> <?= htmlspecialchars($produto['descricao']) ?><br>
+                            <strong>Categoria:</strong> <?= htmlspecialchars($produto['categoria_nome'] ?? 'Sem Categoria') ?><br>
+                            <strong>Quantidade Atual:</strong> <?= formatarNumeroInteiro($produto['quantidade']) ?><br>
+                            <strong>Estoque Mínimo:</strong> <?= formatarNumeroInteiro($produto['estoque_minimo']) ?><br>
+                            <strong>Preço:</strong> <?= formatarValorMonetario($produto['preco']) ?><br>
+                            <strong>Ações:</strong>
+                            <a href="editar-produto.php?id=<?= $produto['id'] ?>">Editar</a>
+                            <a href="excluir-produto.php?id=<?= $produto['id'] ?>" onclick="return confirm('Tem certeza que deseja excluir este produto?')">Excluir</a>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
             </div>
         </main>
     </div>

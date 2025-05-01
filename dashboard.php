@@ -43,6 +43,7 @@ $valor_total_produtos = number_format($valor_total_produtos, 2, ',', '.');
 // Consulta para produtos com estoque baixo
 $stmt = $pdo->query("SELECT * FROM produtos WHERE quantidade <= estoque_minimo");
 $produtos_baixo_estoque = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$total_baixo_estoque = count($produtos_baixo_estoque);
 ?>
 
 <!DOCTYPE html>
@@ -63,7 +64,7 @@ $produtos_baixo_estoque = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <!-- Cabeçalho -->
             <header class="header">
                 <div class="logo">
-                <img src="https://bluefocus.com.br/sites/default/files/styles/medium/public/estoque.png?itok=1yVi8VcO" alt="Logo" width="50">
+                    <img src="https://bluefocus.com.br/sites/default/files/styles/medium/public/estoque.png?itok=1yVi8VcO" alt="Logo" width="50">
                 </div>
                 <div class="user-info">
                     <span class="user-name">Olá, <?= htmlspecialchars($_SESSION['nome']) ?></span>
@@ -72,6 +73,7 @@ $produtos_baixo_estoque = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <a href="logout.php">Sair</a>
                     </div>
                 </div>
+                <button class="menu-toggle" id="menuToggle">&#9776;</button>
             </header>
 
             <!-- Cards do Dashboard -->
@@ -90,10 +92,10 @@ $produtos_baixo_estoque = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <p>R$ <?= $valor_total_produtos ?></p>
                 </div>
 
-                <!-- Card de Alerta de Estoque Baixo -->
-                <div class="card">
+                <!-- Card de Alerta de Estoque Baixo (Visível no Desktop) -->
+                <div class="card desktop-card">
                     <h3>Alerta de Estoque Baixo</h3>
-                    <?php if (count($produtos_baixo_estoque) > 0): ?>
+                    <?php if ($total_baixo_estoque > 0): ?>
                         <ul>
                             <?php foreach ($produtos_baixo_estoque as $produto): ?>
                                 <li>
@@ -102,6 +104,16 @@ $produtos_baixo_estoque = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 </li>
                             <?php endforeach; ?>
                         </ul>
+                    <?php else: ?>
+                        <p>Nenhum produto com estoque baixo.</p>
+                    <?php endif; ?>
+                </div>
+
+                <!-- Mensagem de Alerta de Estoque Baixo (Visível no Mobile) -->
+                <div class="card mobile-message">
+                    <h3>Alerta de Estoque Baixo</h3>
+                    <?php if ($total_baixo_estoque > 0): ?>
+                        <p>Há <?= $total_baixo_estoque ?> produto(s) com estoque baixo.</p>
                     <?php else: ?>
                         <p>Nenhum produto com estoque baixo.</p>
                     <?php endif; ?>

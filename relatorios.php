@@ -113,7 +113,7 @@ if ($data_inicio && $data_fim && $tipo_relatorio) {
             <!-- Cabeçalho -->
             <header class="header">
                 <div class="logo">
-                <img src="https://bluefocus.com.br/sites/default/files/styles/medium/public/estoque.png?itok=1yVi8VcO" alt="Logo" width="50">
+                    <img src="https://bluefocus.com.br/sites/default/files/styles/medium/public/estoque.png?itok=1yVi8VcO" alt="Logo" width="50">
                 </div>
                 <div class="user-info">
                     <span class="user-name"><?= htmlspecialchars($_SESSION['nome']) ?></span>
@@ -122,6 +122,7 @@ if ($data_inicio && $data_fim && $tipo_relatorio) {
                         <a href="logout.php">Sair</a>
                     </div>
                 </div>
+                <button class="menu-toggle" id="menuToggle">&#9776;</button>
             </header>
 
             <!-- Área de Scroll -->
@@ -132,17 +133,17 @@ if ($data_inicio && $data_fim && $tipo_relatorio) {
                 <!-- Formulário de Filtros -->
                 <form method="GET" style="margin-bottom: 20px;">
                     <label for="data_inicio">Data Inicial:</label>
-                    <input type="date" name="data_inicio" id="data_inicio" required>
+                    <input type="date" name="data_inicio" id="data_inicio" required value="<?= htmlspecialchars($data_inicio ?? '') ?>">
 
                     <label for="data_fim">Data Final:</label>
-                    <input type="date" name="data_fim" id="data_fim" required>
+                    <input type="date" name="data_fim" id="data_fim" required value="<?= htmlspecialchars($data_fim ?? '') ?>">
 
                     <label for="tipo_relatorio">Tipo de Relatório:</label>
                     <select name="tipo_relatorio" id="tipo_relatorio" required>
-                        <option value="consumo">Consumo</option>
-                        <option value="reposicao">Reposição</option>
-                        <option value="tendencias">Tendências Temporais</option>
-                        <option value="valor">Valor Total Movimentado</option>
+                        <option value="consumo" <?= $tipo_relatorio === 'consumo' ? 'selected' : '' ?>>Consumo</option>
+                        <option value="reposicao" <?= $tipo_relatorio === 'reposicao' ? 'selected' : '' ?>>Reposição</option>
+                        <option value="tendencias" <?= $tipo_relatorio === 'tendencias' ? 'selected' : '' ?>>Tendências Temporais</option>
+                        <option value="valor" <?= $tipo_relatorio === 'valor' ? 'selected' : '' ?>>Valor Total Movimentado</option>
                     </select>
 
                     <button type="submit">Gerar Relatório</button>
@@ -162,7 +163,7 @@ if ($data_inicio && $data_fim && $tipo_relatorio) {
                                         <th>Total Movimentado</th>
                                     <?php else: ?>
                                         <th>Produto</th>
-                                        <th>Valor</th>
+                                        <th>Quantidade</th>
                                     <?php endif; ?>
                                 </tr>
                             </thead>
@@ -195,8 +196,18 @@ if ($data_inicio && $data_fim && $tipo_relatorio) {
                                         data: {
                                             labels: [<?php echo "'" . implode("','", array_column($resultados, 'produto')) . "'"; ?>],
                                             datasets: [{
-                                                label: 'Valores',
-                                                data: [<?php echo implode(',', array_column($resultados, 'total_consumido' ?? 'total_reposto' ?? 'valor_total')); ?>],
+                                                label: 'Quantidade',
+                                                data: [
+                                                    <?php
+                                                    if ($tipo_relatorio === 'reposicao') {
+                                                        echo implode(',', array_column($resultados, 'total_reposto'));
+                                                    } elseif ($tipo_relatorio === 'consumo') {
+                                                        echo implode(',', array_column($resultados, 'total_consumido'));
+                                                    } elseif ($tipo_relatorio === 'valor') {
+                                                        echo implode(',', array_column($resultados, 'valor_total'));
+                                                    }
+                                                    ?>
+                                                ],
                                                 backgroundColor: 'rgba(75, 192, 192, 0.2)',
                                                 borderColor: 'rgba(75, 192, 192, 1)',
                                                 borderWidth: 1

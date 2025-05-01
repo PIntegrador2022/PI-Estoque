@@ -71,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <!-- Cabeçalho -->
             <header class="header">
                 <div class="logo">
-                <img src="https://bluefocus.com.br/sites/default/files/styles/medium/public/estoque.png?itok=1yVi8VcO" alt="Logo" width="50">
+                    <img src="https://bluefocus.com.br/sites/default/files/styles/medium/public/estoque.png?itok=1yVi8VcO" alt="Logo" width="50">
                 </div>
                 <div class="user-info">
                     <span class="user-name"><?= htmlspecialchars($_SESSION['nome']) ?></span>
@@ -80,6 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <a href="logout.php">Sair</a>
                     </div>
                 </div>
+                <button class="menu-toggle" id="menuToggle">&#9776;</button>
             </header>
 
             <!-- Área de Mensagens -->
@@ -100,8 +101,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <button type="submit">Buscar</button>
                 </form>
 
-                <!-- Lista de Produtos -->
-                <table>
+                <!-- Lista de Produtos (Visível no Desktop) -->
+                <table class="desktop-table">
                     <thead>
                         <tr>
                             <th>Código</th>
@@ -131,6 +132,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <?php endforeach; ?>
                     </tbody>
                 </table>
+
+                <!-- Lista Amigável para Mobile -->
+                <ul class="mobile-list">
+                    <?php foreach ($produtos as $produto): ?>
+                        <li>
+                            <strong>Código:</strong> <?= $produto['id'] ?><br>
+                            <strong>Nome:</strong> <?= htmlspecialchars($produto['nome']) ?><br>
+                            <strong>Descrição:</strong> <?= htmlspecialchars($produto['descricao']) ?><br>
+                            <strong>Quantidade Atual:</strong> <?= $produto['quantidade'] ?><br>
+                            <strong>Ações:</strong>
+                            <form method="POST" style="display:inline;">
+                                <input type="hidden" name="produto_id" value="<?= $produto['id'] ?>">
+                                <input type="number" name="quantidade_adicional" placeholder="Quantidade" min="1" required>
+                                <input type="date" name="data_movimentacao" value="<?= date('Y-m-d') ?>" required>
+                                <button type="submit">Registrar Entrada</button>
+                            </form>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
             </div>
         </main>
     </div>

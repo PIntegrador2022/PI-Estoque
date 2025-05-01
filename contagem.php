@@ -61,7 +61,7 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <!-- Cabeçalho -->
             <header class="header">
                 <div class="logo">
-                <img src="https://bluefocus.com.br/sites/default/files/styles/medium/public/estoque.png?itok=1yVi8VcO" alt="Logo" width="50">
+                    <img src="https://bluefocus.com.br/sites/default/files/styles/medium/public/estoque.png?itok=1yVi8VcO" alt="Logo" width="50">
                 </div>
                 <div class="user-info">
                     <span class="user-name"><?= htmlspecialchars($_SESSION['nome']) ?></span>
@@ -70,6 +70,7 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <a href="logout.php">Sair</a>
                     </div>
                 </div>
+                <button class="menu-toggle" id="menuToggle">&#9776;</button>
             </header>
 
             <!-- Área de Scroll -->
@@ -77,8 +78,8 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <!-- Título da Página -->
                 <h2>Contagem de Produtos</h2>
 
-                <!-- Lista de Produtos -->
-                <table>
+                <!-- Lista de Produtos (Visível no Desktop) -->
+                <table class="desktop-table">
                     <thead>
                         <tr>
                             <th>Nome</th>
@@ -101,6 +102,19 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <?php endforeach; ?>
                     </tbody>
                 </table>
+
+                <!-- Lista Amigável para Mobile -->
+                <ul class="mobile-list">
+                    <?php foreach ($produtos as $produto): ?>
+                        <li>
+                            <strong>Nome:</strong> <?= htmlspecialchars($produto['nome']) ?><br>
+                            <strong>Quantidade Atual:</strong> <?= $produto['quantidade'] ?><br>
+                            <strong>Ações:</strong>
+                            <a href="?acao=adicionar&id=<?= $produto['id'] ?>" class="btn btn-success">+</a>
+                            <a href="?acao=remover&id=<?= $produto['id'] ?>" class="btn btn-danger">-</a>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
             </div>
         </main>
     </div>
