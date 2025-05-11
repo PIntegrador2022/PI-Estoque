@@ -18,7 +18,8 @@ Requisitos da Univesp a cumprir:
 
 Adições opcionais:
 - Campos de data de criação e alteração em cada produto, para melhor controle. A data de criação indicando o momento exato do cadastro do produto, e alteração a última data em que o produto sofreu alguma edição.
-
+ 
+---
 
 ***Sistema de Estoque***
 O Sistema de Estoque é uma aplicação web desenvolvida para gerenciar produtos, movimentações (entradas e saídas) e relatórios em um ambiente empresarial. O objetivo principal é fornecer uma ferramenta intuitiva e eficiente para controle de estoque, permitindo que os usuários realizem operações como cadastro de produtos, registro de movimentações e geração de relatórios detalhados.
