@@ -21,23 +21,23 @@ Adições opcionais:
  
 ---
 
-***Sistema de Estoque***
+***#Sistema de Estoque***
 O Sistema de Estoque é uma aplicação web desenvolvida para gerenciar produtos, movimentações (entradas e saídas) e relatórios em um ambiente empresarial. O objetivo principal é fornecer uma ferramenta intuitiva e eficiente para controle de estoque, permitindo que os usuários realizem operações como cadastro de produtos, registro de movimentações e geração de relatórios detalhados.
 
-***Funcionalidades Principais***
+***#Funcionalidades Principais***
 Cadastro de Produtos : Inclusão, atualização e exclusão de produtos no sistema.
 Movimentações de Estoque : Registro de entradas (reposição) e saídas (consumo) de produtos.
 Geração de Relatórios : Visualização de dados em tabelas e gráficos interativos, com filtros por período e tipo de relatório (consumo, reposição, tendências temporais e valor total movimentado).
 Controle de Acesso : Autenticação de usuários e níveis de acesso diferenciados.
 Requisitos
 Para executar este projeto, você precisará dos seguintes componentes instalados no seu ambiente:
-
+```
 PHP >= 7.4
 MySQL
 Composer (para gerenciar dependências PHP)
 Servidor Web (Apache/Nginx ou PHP Built-in Server para desenvolvimento)
-
-***Instalação***
+```
+***#Instalação***
 ***Passo 1: Clonar o Repositório***
 Clone o repositório usando o comando abaixo:
 ```
@@ -80,7 +80,7 @@ Login: admin
 Senha: admin123
 ```
 
-***Estrutura do Projeto***
+***#Estrutura do Projeto***
 ```
 /PI-Estoque
     ├── .gitignore          <-- Arquivo para ignorar pastas/arquivos desnecessários
@@ -100,7 +100,7 @@ Senha: admin123
     └── README.md           <-- Documentação do projeto
 ```
 
-***Geração de Relatórios***
+***#Geração de Relatórios***
 O sistema permite gerar relatórios com base nos seguintes tipos:
 
 ***Consumo*** : Mostra a quantidade total consumida de cada produto dentro de um intervalo de datas.
@@ -113,12 +113,13 @@ Para gerar um relatório:
 2. Clique no botão Gerar Relatório .
 3. Os resultados serão exibidos em uma tabela e, quando aplicável, em um gráfico interativo.
 
-***Tecnologias Utilizadas***
+***#Tecnologias Utilizadas***
+```
 Backend : PHP (PDO para manipulação de banco de dados)
 Frontend : HTML5, CSS3, JavaScript (Chart.js para gráficos interativos)
 Banco de Dados : MySQL
 Ferramentas : Composer para gerenciamento de dependências, Git para controle de versão.
-
+```
 ***Representação Gráfica Simplificada Do BD:***
 ```
 [usuarios]
