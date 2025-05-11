@@ -80,7 +80,7 @@ Senha: admin123
 ```
 
 ***Estrutura do Projeto***
-
+```
 /PI-Estoque
     ├── .gitignore          <-- Arquivo para ignorar pastas/arquivos desnecessários
     ├── composer.json       <-- Arquivo de dependências do Composer
@@ -97,7 +97,7 @@ Senha: admin123
     │   └── sidebar.php     <-- Componentes reutilizáveis (ex.: sidebar)
     ├── vendor/             <-- Pasta gerada pelo Composer (ignorada no .gitignore)
     └── README.md           <-- Documentação do projeto
-
+```
 
 ***Geração de Relatórios***
 O sistema permite gerar relatórios com base nos seguintes tipos:
