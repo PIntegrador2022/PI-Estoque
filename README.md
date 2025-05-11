@@ -12,9 +12,11 @@ Requisitos da Univesp a cumprir:
 - Controle de Versão ✓
 - Integração Contínua ✓
 - Testes ✓
-- Análise de Dados
-- Nuvem
-- Acessibilidade (Interface mobile)
+- Análise de Dados ✓
+- Nuvem ✓
+- Acessibilidade (Interface mobile) ✓
 
 Adições opcionais:
 - Campos de data de criação e alteração em cada produto, para melhor controle. A data de criação indicando o momento exato do cadastro do produto, e alteração a última data em que o produto sofreu alguma edição.
+
+
