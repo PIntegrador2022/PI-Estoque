@@ -120,7 +120,7 @@ Para gerar um relatório:
 **Banco de Dados** : MySQL  
 **Ferramentas** : Composer para gerenciamento de dependências, Git para controle de versão.  
 
-**Representação Gráfica Simplificada Do BD:**
+## Representação Gráfica Simplificada Do BD:
 ```
 [usuarios]
 +-------------------+
