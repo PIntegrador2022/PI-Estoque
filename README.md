@@ -114,12 +114,12 @@ Para gerar um relatório:
 3. Os resultados serão exibidos em uma tabela e, quando aplicável, em um gráfico interativo.
 
 ## Tecnologias Utilizadas
-```
-Backend : PHP (PDO para manipulação de banco de dados)
-Frontend : HTML5, CSS3, JavaScript (Chart.js para gráficos interativos)
-Banco de Dados : MySQL
-Ferramentas : Composer para gerenciamento de dependências, Git para controle de versão.
-```
+
+**Backend** : PHP (PDO para manipulação de banco de dados)  
+**Frontend** : HTML5, CSS3, JavaScript (Chart.js para gráficos interativos)  
+**Banco de Dados** : MySQL  
+**Ferramentas** : Composer para gerenciamento de dependências, Git para controle de versão.  
+
 **Representação Gráfica Simplificada Do BD:**
 ```
 [usuarios]
