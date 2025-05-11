@@ -119,6 +119,7 @@ Banco de Dados : MySQL
 Ferramentas : Composer para gerenciamento de dependências, Git para controle de versão.
 
 ***Representação Gráfica Simplificada Do BD:***
+```
 [usuarios]
 +-------------------+
 | id (PK)           |
@@ -168,3 +169,4 @@ Ferramentas : Composer para gerenciamento de dependências, Git para controle de
 | observacao        |
 | created_at        |
 +-------------------+
+```
