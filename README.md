@@ -103,9 +103,9 @@ Senha: admin123
 ## Geração de Relatórios
 O sistema permite gerar relatórios com base nos seguintes tipos:
 
-***Consumo*** : Mostra a quantidade total consumida de cada produto dentro de um intervalo de datas.
-***Reposição*** : Exibe a quantidade total repostada de cada produto dentro de um intervalo de datas.
-***Tendências Temporais*** : Apresenta a movimentação total por mês (formato MM-YYYY).
+***Consumo*** : Mostra a quantidade total consumida de cada produto dentro de um intervalo de datas.  
+***Reposição*** : Exibe a quantidade total repostada de cada produto dentro de um intervalo de datas.  
+***Tendências Temporais*** : Apresenta a movimentação total por mês (formato MM-YYYY).  
 ***Valor Total Movimentado*** : Calcula o valor monetário total movimentado por produto.
 
 Para gerar um relatório:
