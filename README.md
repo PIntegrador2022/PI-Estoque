@@ -74,6 +74,8 @@ try {
 Você pode usar qualquer servidor web compatível com PHP (Apache/Nginx) ou iniciar um servidor embutido do PHP para testes locais.
 
 **Passo 5: Testar a Aplicação**
+Acessar a url: http://localhost/PI-Estoque  
+
 No banco de dados importado já contém um administrador, para realizar o login utilizar:
 ```
 Login: admin
