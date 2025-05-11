@@ -38,19 +38,19 @@ Composer (para gerenciar dependências PHP)
 Servidor Web (Apache/Nginx ou PHP Built-in Server para desenvolvimento)
 ```
 ## Instalação
-***Passo 1: Clonar o Repositório***
+**Passo 1: Clonar o Repositório**
 Clone o repositório usando o comando abaixo:
 ```
 git clone https://github.com/PIntegrador2022/PI-Estoque.git
 ```
-***Passo 2: Instalar as Dependências***
+**Passo 2: Instalar as Dependências**
 Certifique-se de que o Composer está instalado no seu sistema. Em seguida, execute o seguinte comando para instalar as dependências necessárias já dentro da pagina no projeto:
 ```
 composer install
 ```
 Isso criará a pasta vendor/ e instalará todas as bibliotecas listadas no arquivo composer.json.
 
-***Passo 3: Configurar o Banco de Dados***
+**Passo 3: Configurar o Banco de Dados**
 1. Crie um banco de dados MySQL. Por exemplo:
 ```CREATE DATABASE estoque;```
 2. Importe o esquema SQL contido no arquivo na pasta do projeto (estoque.sql) para seu o banco de dados que vôce a cabou de criar.
@@ -70,10 +70,10 @@ try {
 }
 ?>
 ```
-***Passo 4: Iniciar o Servidor Web***
+**Passo 4: Iniciar o Servidor Web**
 Você pode usar qualquer servidor web compatível com PHP (Apache/Nginx) ou iniciar um servidor embutido do PHP para testes locais.
 
-***Passo 5: Testar a Aplicação***
+**Passo 5: Testar a Aplicação**
 No banco de dados importado já contém um administrador, para realizar o login utilizar:
 ```
 Login: admin
@@ -113,14 +113,14 @@ Para gerar um relatório:
 2. Clique no botão Gerar Relatório .
 3. Os resultados serão exibidos em uma tabela e, quando aplicável, em um gráfico interativo.
 
-## Tecnologias Utilizadas***
+## Tecnologias Utilizadas
 ```
 Backend : PHP (PDO para manipulação de banco de dados)
 Frontend : HTML5, CSS3, JavaScript (Chart.js para gráficos interativos)
 Banco de Dados : MySQL
 Ferramentas : Composer para gerenciamento de dependências, Git para controle de versão.
 ```
-***Representação Gráfica Simplificada Do BD:***
+**Representação Gráfica Simplificada Do BD:**
 ```
 [usuarios]
 +-------------------+
