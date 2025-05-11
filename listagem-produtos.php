@@ -64,7 +64,7 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <div class="container">
         <!-- Sidebar -->
         <?php include_once 'includes/sidebar.php'; ?>
-
+        
         <!-- Conteúdo Principal -->
         <main class="content">
             <!-- Cabeçalho -->
@@ -81,12 +81,12 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </div>
                 <button class="menu-toggle" id="menuToggle">&#9776;</button>
             </header>
-
+            
             <!-- Área de Scroll -->
             <div class="scrollable-content">
                 <!-- Título da Página -->
                 <h2>Listagem de Produtos</h2>
-
+                
                 <!-- Formulário de Busca e Filtro -->
                 <form method="GET" style="margin-bottom: 20px;">
                     <input type="text" name="busca" placeholder="Buscar por nome, código ou categoria" value="<?= htmlspecialchars($busca) ?>" required>
@@ -96,10 +96,10 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <option value="todos" <?= $filtro_estoque === 'todos' ? 'selected' : '' ?>>Todos os Produtos</option>
                         <option value="baixo" <?= $filtro_estoque === 'baixo' ? 'selected' : '' ?>>Estoque Baixo</option>
                     </select>
-
+                    <a href="exportar-produtos.php" class="btn-export">Exportar Produtos para Excel</a>
                     <button type="submit">Aplicar Filtro</button>
                 </form>
-
+                
                 <!-- Lista de Produtos (Visível no Desktop) -->
                 <table class="desktop-table">
                     <thead>

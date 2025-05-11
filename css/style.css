@@ -354,6 +354,36 @@ table td a:hover {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
+/* Estilo do botão de exportação */
+.btn-export {
+    display: inline-block;
+    padding: 5px 10px;
+    background-color: #2c3e50; /* Verde */
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-left: 20px;
+    margin-bottom: 5px;
+}
+
+/* Efeito ao passar o mouse */
+.btn-export:hover {
+    background-color: #789ec4; /* Verde mais escuro */
+    transform: scale(1.05); /* Aumenta ligeiramente o tamanho */
+}
+
+/* Efeito ao clicar */
+.btn-export:active {
+    background-color: #1a242e; /* Verde ainda mais escuro */
+    transform: scale(0.98); /* Diminui ligeiramente o tamanho */
+}
+
 /* Responsividade */
 @media (max-width: 768px) {
     /* Oculta o sidebar por padrão no mobile */

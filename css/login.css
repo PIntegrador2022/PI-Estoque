@@ -27,6 +27,16 @@ body {
     font-size: 24px;
 }
 
+/* Estilo para os labels */
+.login-container label {
+    display: block; /* Faz com que os labels ocupem toda a largura disponível */
+    margin-bottom: 5px; /* Espaçamento entre o label e o input */
+    text-align: left; /* Alinha o texto à esquerda */
+    font-size: 16px;
+    color: #2c3e50; /* Mesma cor azul escuro dos outros elementos */
+    width: 100%; /* Garante que o label tenha a mesma largura dos inputs */
+}
+
 .login-container input[type="text"],
 .login-container input[type="password"] {
     width: 100%;
@@ -35,6 +45,7 @@ body {
     border: 1px solid #bdc3c7; /* Borda cinza clara */
     border-radius: 5px; /* Bordas arredondadas */
     font-size: 16px;
+    box-sizing: border-box; /* Inclui padding e borda na largura total */
 }
 
 .login-container button {
